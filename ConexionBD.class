@@ -15,16 +15,29 @@ public class ConexionBD {
 
     public Connection cadena;
 
-    public ConexionBD() {
+    private ConexionBD() {
          this.cadena = null;
     }
      /**
      * Constructor de la clase que inicializa la conexión como null.
      */
+
+    /**
+     * Para obtener una instancia única.
+     */
+    public static ConexionBD getInstancia() {
+        if (instancia == null) {
+            instancia = new ConexionBD();
+        }
+        return instancia;
+    }
+
     public Connection conectar() {
         try {
+            if (this.cadena == null || this.cadena.isClosed()) {
             Class.forName(DRIVER);
             this.cadena = DriverManager.getConnection(URL, USER, PASWORD);
+        }
 
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -38,10 +51,11 @@ public class ConexionBD {
      */
     public void desconectar() {
         try {
-            this.cadena.close();
+            if (this.cadena != null && !this.cadena.isClosed()) {
+                this.cadena.close();
+            }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
-
 }
