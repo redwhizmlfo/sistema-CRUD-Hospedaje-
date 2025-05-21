@@ -4,6 +4,8 @@ import java.sql.SQLException; // Manejo de excepciones relacionadas con SQL.
 import javax.swing.JOptionPane; // Para mostrar mensajes emergentes.
 
 public class ConexionBD {
+    private static ConexionBD instancia;
+    
     
     // Variables constantes para la configuración de la conexión.
     private final String DRIVER = "oracle.jdbc.driver.OracleDriver"; // Controlador JDBC de Oracle.
